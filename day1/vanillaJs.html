@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanilla JS</title>
+</head>
+<!-- 
+    기존의 vanilla js에서 작업하던 방식
+        1. html 문서 생성
+        2. js에서 가져옴
+        3. event를 감지
+        4. data + html를 업데이트
+
+    => 하지만 이런 방식으로 작업한다면, 
+        html element를 계속 js에서 가져와서 
+        event listner를 달고
+        handle해줄 함수를 만들어야 함
+
+
+    => react를 사용하면 그럴 일이 없다!
+-->
+<!-- 1. html 문서 생성 -->
+<body>
+    <span>Total clicks : 0</span>
+    <button id="btn">Click me</button>
+    
+    <!-- 2. js에서 가져옴 -->
+    <script>
+        let counter = 0;
+        
+        const button = document.getElementById("btn");
+        const span = document.querySelector("span");
+        
+        function handleClick() {
+            // console.log("i have been clicked");
+            counter += 1;
+            // 4. data + html를 업데이트
+            span.innerText = `Total clicks: ${counter}`;
+        }
+        // 3. event를 감지
+        button.addEventListener("click", handleClick);
+    </script>
+</body>
+</html>
