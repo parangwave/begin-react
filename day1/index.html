@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React</title>
+    <title>React 버튼 생성해보기</title>
   </head>
   <body>
     <div id="root"></div>
@@ -28,15 +28,34 @@
     // ⭐ react는 element 업데이트가 필요하면 그걸 알고 자동으로 함
     // ⭐ 즉, 유저에게 보일 내용을 제어할 수 있음
     // ⭐ JS에서 element를 만듦 -> React JS가 html로 번역함
-    const span = React.createElement("span", 
-                                    {id: "sexy-span",
-                                    style: {color: "cornflowerblue"} },
-                                    "Hello , I'm a span"
-                                    );
 
+    // React JS는 바로 interactivity를 위하여 제작됨
+    // interactive한 어플리케이션에서 하는 작업들 = 모두 event 감지하는 일
+    // addEventListener를 하나하나 등록하는 대신, property에서 event를 등록할 수 있게 됨
+    const h3 = React.createElement(
+      "h3",
+      {
+        id: "title",
+        style: { color: "cornflowerblue" },
+        onMouseEnter: () => console.log("mouse enter"),
+      },
+      "Hello , I'm a span"
+    );
+
+    // ※ constant의 이름은 html 태그 이름과 반드시 일치할 필요 XX
+    const btn = React.createElement(
+      "button",
+      {
+        onClick: () => console.log("i'm clicked"),
+      },
+      "Click me"
+    );
+
+    const container = React.createElement("div", null, [h3, btn]);
 
     // render() = React element를 가지고 html로 만들어 배치 -> 사용자에게 보여준다
     // render(배치할 element, 배치할 장소);
-    ReactDOM.render(span, root);
+    // ReactDOM.render(span, root);
+    ReactDOM.render(container, root);
   </script>
 </html>
