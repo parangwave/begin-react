@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <!-- for react 작업, react, react dom를 import해야 함 -->
+  <!-- React JS(엔진) = 어플리케이션이 아주 interactive하도록 만들어주는 library -->
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <!-- React DOM = library 또는 package, 모든 react element들을 html body에 두는 역할 -->
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <!-- console에 React를 쳐보고 잘 import되었는지 확인하기 -->
+  <script>
+    // React Js element를 생성하는 방법
+    // js를 이용해서 만들것임
+    // 참고로 개발자들이 사용하는 방식은 X
+
+    const root = document.getElementById("root");
+
+    // console에 span을 치면 나옴
+    // 즉, span은 생성되었으나 page에는 올라오지 X
+    // 두번째 argument로 span의 props를 둘 수 있음
+
+    // ⭐ react는 element 업데이트가 필요하면 그걸 알고 자동으로 함
+    // ⭐ 즉, 유저에게 보일 내용을 제어할 수 있음
+    // ⭐ JS에서 element를 만듦 -> React JS가 html로 번역함
+    const span = React.createElement("span", 
+                                    {id: "sexy-span",
+                                    style: {color: "cornflowerblue"} },
+                                    "Hello , I'm a span"
+                                    );
+
+
+    // render() = React element를 가지고 html로 만들어 배치 -> 사용자에게 보여준다
+    // render(배치할 element, 배치할 장소);
+    ReactDOM.render(span, root);
+  </script>
+</html>
