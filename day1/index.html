@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React 버튼 생성해보기</title>
+    <title>JSX</title>
+    <!-- JSX; JS를 확장한 문법  -->
+    <!-- html에서 사용한 문법과 흡사한 문법을 사용해서 react요소를 만들 수 있게 함 -->
   </head>
   <body>
     <div id="root"></div>
@@ -14,7 +16,12 @@
   <!-- React DOM = library 또는 package, 모든 react element들을 html body에 두는 역할 -->
   <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
   <!-- console에 React를 쳐보고 잘 import되었는지 확인하기 -->
-  <script>
+
+  <!-- Babel; 코드 변환해줌. 우리가 JSX로 적은 코드를 브라우저가 이해할 수 있는 형태로 바꿔줌 -->
+  <!-- Babel standalone을 통해 다운받을 것 -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <script type="text/babel">
     // React Js element를 생성하는 방법
     // js를 이용해서 만들것임
     // 참고로 개발자들이 사용하는 방식은 X
@@ -32,6 +39,7 @@
     // React JS는 바로 interactivity를 위하여 제작됨
     // interactive한 어플리케이션에서 하는 작업들 = 모두 event 감지하는 일
     // addEventListener를 하나하나 등록하는 대신, property에서 event를 등록할 수 있게 됨
+    /*
     const h3 = React.createElement(
       "h3",
       {
@@ -41,8 +49,18 @@
       },
       "Hello , I'm a span"
     );
+    */
+
+    // JSX 문법으로 쓰니 html 문법에 가까움!
+    // html tag사이에 content를 넣고 props를 적어주면 됨
+    const Title = (
+      <h3 id="title" onMouseEnter={() => console.log("mouse enter")}>
+        Hello , I'm a title
+      </h3>
+    );
 
     // ※ constant의 이름은 html 태그 이름과 반드시 일치할 필요 XX
+    /*
     const btn = React.createElement(
       "button",
       {
@@ -50,12 +68,25 @@
       },
       "Click me"
     );
+    */
 
-    const container = React.createElement("div", null, [h3, btn]);
+    const Button = (
+      <button
+        style={{ backgroundColor: "tomato" }}
+        onClick={() => console.log("i'm clicked")}
+      >
+        Click me
+      </button>
+    );
+
+    // const container = React.createElement("div", null, [h3, btn]);
+    // const Container = <div>Title Button</div>;
+    const container  = React.createElement("div", null, [Title, Button]);
 
     // render() = React element를 가지고 html로 만들어 배치 -> 사용자에게 보여준다
     // render(배치할 element, 배치할 장소);
     // ReactDOM.render(span, root);
+    // ReactDOM.render(Container, root);
     ReactDOM.render(container, root);
   </script>
 </html>
