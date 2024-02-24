@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JSX</title>
+    <title>JSX pt.2</title>
     <!-- JSX; JS를 확장한 문법  -->
     <!-- html에서 사용한 문법과 흡사한 문법을 사용해서 react요소를 만들 수 있게 함 -->
   </head>
@@ -53,11 +53,17 @@
 
     // JSX 문법으로 쓰니 html 문법에 가까움!
     // html tag사이에 content를 넣고 props를 적어주면 됨
-    const Title = (
-      <h3 id="title" onMouseEnter={() => console.log("mouse enter")}>
-        Hello , I'm a title
-      </h3>
-    );
+    function Title () {
+      return (
+        <h3 id="title" onMouseEnter={() => console.log("mouse enter")}>
+          Hello , I'm a title
+        </h3>
+      );
+    }
+
+    // arrow func의 ()와 {} 사용의 차이점
+    // () => (); ; 이미 return까지 포함함 (편리한 문법으로 사용 多)
+    // () => {return ();} = () => ();
 
     // ※ constant의 이름은 html 태그 이름과 반드시 일치할 필요 XX
     /*
@@ -70,7 +76,7 @@
     );
     */
 
-    const Button = (
+    const Button = () => (
       <button
         style={{ backgroundColor: "tomato" }}
         onClick={() => console.log("i'm clicked")}
@@ -81,12 +87,31 @@
 
     // const container = React.createElement("div", null, [h3, btn]);
     // const Container = <div>Title Button</div>;
-    const container  = React.createElement("div", null, [Title, Button]);
+
+    // JSX pt.2는 밑의 코드를 JSX 방식으로 적어볼 것임 
+    // const Container  = React.createElement("div", null, [Title, Button]);
+    
+    const Container = () => (
+      <div>
+        <button>Hi</button>
+        <Title />   
+        <Button />
+      </div>
+    );
+    // JSX문법으로 Title이나 Button을 포함시키기 위한 방법
+    // 1. 이 element들을 function(함수)로 만들어야 함
+    // 2. 그리고 html tag처럼 이 element를 넣어줌
+    // ⭐ component의 첫 글자는 반드시 대문자!!!
+    // 만약 소문자, react랑 JSX는 이게 일반 html tag라고 생각함
+    
+    // 이렇게 JSX는 어플리케이션을 여러가지 작은 요소로 나누어 관리할 수 있게 해줌
+    // 여러 요소로 잘게 쪼개서 만들어서 렌더링으로 합쳐주기만 하면 됨
+    // Babel은 이걸 react코드로 변환 → title(), button(), Container()를 createElement()로 return함
+    // 직접 만든 component를 렌더링해서 다른 곳에서 사용할 때는 항상 ⭐대문자⭐로 시작해야함!!!
 
     // render() = React element를 가지고 html로 만들어 배치 -> 사용자에게 보여준다
     // render(배치할 element, 배치할 장소);
     // ReactDOM.render(span, root);
-    // ReactDOM.render(Container, root);
-    ReactDOM.render(container, root);
+    ReactDOM.render(<Container />, root);
   </script>
 </html>
