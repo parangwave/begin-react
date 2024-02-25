@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>state</title>
+    <title>setState part.1</title>
     <!-- state; 기본적으로 데이터가 저장되는 곳 -->
     <!-- react js 어플에 값이 바뀔 데이터를 담아줄 수 있을까 살펴보기-->
     <!-- 후에 내용 복습, component(=함수)에 state를 더할 것임 -->
@@ -31,20 +31,20 @@
     // 참고로 개발자들이 사용하는 방식은 X
 
     const root = document.getElementById("root");
-    let counter = 0;
+    // let counter = 0;
 
-    function countUp() {
-      counter += 1;
-      render();
-      // ReactDOM.render(<Container />, root);
-    }
+    // function countUp() {
+    //   counter += 1;
+    //   render();
+    //   // ReactDOM.render(<Container />, root);
+    // }
     
     // 이제 Container component는 업데이트된 counter를 가지고 있을 것임
     // 우리가 해아하는 것 = 데이터가 바뀔때마다, Container를 리렌더링 
     // 최고의 방식 X b/c 폼, 로그인 페이지, 알림들을 계속 호출한다고 가정하면.. 😈
-    function render() {
-      ReactDOM.render(<Container />, root);
-    }
+    // function render() {
+    //   ReactDOM.render(<Container />, root);
+    // }
 
     // console에 span을 치면 나옴
     // 즉, span은 생성되었으나 page에는 올라오지 X
@@ -102,11 +102,31 @@
     // Container를 다시 렌더링 => 그래서 rerender 함수를 만드는 것이 😀
     // ⭐ react Js는 UI에서 바뀐 부분만 업데이트함 (h3, div는 업데이트X)
     // React Js는 이전에 렌더링된 컴포넌트는 어떤 거였는지 확인하고 있음
-    function Container () {
+
+    // counter가 0일때, 최초의 렌더링 -> counter 값을 없데이트 -> 리렌더링
+    // = 초기 component가 초기 데이터를 가지고 렌더링 -> eventListener를 통해 리렌더링 (최선의 방식 X)
+    // => 👍 React JS 어플 내에서 데이터를 보관, 자동으로 리렌더링 👍 -> 매번 함수 호출할 필요 X
+    // 사용자에게 새로운 정보를 보여주고 싶으면, 새로운 정보를 가지고 component를 리렌더링 해줘야함
+    // ⭐ React Js가 어떻게 데이터를 update하는 지 원리를 잘 파악해보기!
+    function App () {
+      // const data = React.useState();
+      const data = React.useState(0);
+      // data(초기값) data를 바꾸기 위한 func
+      console.log(data);  // array를 반환 { undefined, func }
+      
+      // 배열에서 요소 -> 변수
+      const [counter, modifier] = React.useState(0);
+      console.log(counter);
+      console.log(modifier);
+      // const counter = data[0];
+      // const modifier = data[1];
+
       return (
         <div>
-          <h3>Total clicks: {counter}</h3>
-          <button onClick={countUp}>Click me</button>
+          {/* <h3>Total clicks: { data[0] }</h3> */}
+          {/* <h3>Total clicks: { counter }</h3> */}
+          <h3>Total clicks: 0</h3>
+          <button>Click me</button>
         </div>
       );
     }
@@ -124,7 +144,7 @@
     // render() = React element를 가지고 html로 만들어 배치 -> 사용자에게 보여준다
     // render(배치할 element, 배치할 장소);
     // ReactDOM.render(span, root);
-    // ReactDOM.render(<Container />, root);
-    render();
+    ReactDOM.render(<App />, root);
+    // render();
   </script>
 </html>
