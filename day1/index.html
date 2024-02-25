@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JSX pt.2</title>
+    <title>state</title>
+    <!-- state; 기본적으로 데이터가 저장되는 곳 -->
+    <!-- react js 어플에 값이 바뀔 데이터를 담아줄 수 있을까 살펴보기-->
+    <!-- 후에 내용 복습, component(=함수)에 state를 더할 것임 -->
+
     <!-- JSX; JS를 확장한 문법  -->
     <!-- html에서 사용한 문법과 흡사한 문법을 사용해서 react요소를 만들 수 있게 함 -->
   </head>
@@ -20,13 +24,27 @@
   <!-- Babel; 코드 변환해줌. 우리가 JSX로 적은 코드를 브라우저가 이해할 수 있는 형태로 바꿔줌 -->
   <!-- Babel standalone을 통해 다운받을 것 -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  
+
   <script type="text/babel">
     // React Js element를 생성하는 방법
     // js를 이용해서 만들것임
     // 참고로 개발자들이 사용하는 방식은 X
 
     const root = document.getElementById("root");
+    let counter = 0;
+
+    function countUp() {
+      counter += 1;
+      render();
+      // ReactDOM.render(<Container />, root);
+    }
+    
+    // 이제 Container component는 업데이트된 counter를 가지고 있을 것임
+    // 우리가 해아하는 것 = 데이터가 바뀔때마다, Container를 리렌더링 
+    // 최고의 방식 X b/c 폼, 로그인 페이지, 알림들을 계속 호출한다고 가정하면.. 😈
+    function render() {
+      ReactDOM.render(<Container />, root);
+    }
 
     // console에 span을 치면 나옴
     // 즉, span은 생성되었으나 page에는 올라오지 X
@@ -53,13 +71,6 @@
 
     // JSX 문법으로 쓰니 html 문법에 가까움!
     // html tag사이에 content를 넣고 props를 적어주면 됨
-    function Title () {
-      return (
-        <h3 id="title" onMouseEnter={() => console.log("mouse enter")}>
-          Hello , I'm a title
-        </h3>
-      );
-    }
 
     // arrow func의 ()와 {} 사용의 차이점
     // () => (); ; 이미 return까지 포함함 (편리한 문법으로 사용 多)
@@ -76,34 +87,35 @@
     );
     */
 
-    const Button = () => (
-      <button
-        style={{ backgroundColor: "tomato" }}
-        onClick={() => console.log("i'm clicked")}
-      >
-        Click me
-      </button>
-    );
-
     // const container = React.createElement("div", null, [h3, btn]);
     // const Container = <div>Title Button</div>;
 
     // JSX pt.2는 밑의 코드를 JSX 방식으로 적어볼 것임 
     // const Container  = React.createElement("div", null, [Title, Button]);
-    
-    const Container = () => (
-      <div>
-        <button>Hi</button>
-        <Title />   
-        <Button />
-      </div>
-    );
+
+    // component를 단 한 번만 렌더링하고 있음
+    // 막 페이지가 로드 -> Container 안 counter = 0
+    // Container 안 코드 어디애서도 UI를 새로고침 X
+
+    // 어플리케이션이 시작 될 때, Container를 렌더링함, counter = 0
+    // onClick eventListener를 등록, click-> counter가 증가
+    // Container를 다시 렌더링 => 그래서 rerender 함수를 만드는 것이 😀
+    // ⭐ react Js는 UI에서 바뀐 부분만 업데이트함 (h3, div는 업데이트X)
+    // React Js는 이전에 렌더링된 컴포넌트는 어떤 거였는지 확인하고 있음
+    function Container () {
+      return (
+        <div>
+          <h3>Total clicks: {counter}</h3>
+          <button onClick={countUp}>Click me</button>
+        </div>
+      );
+    }
     // JSX문법으로 Title이나 Button을 포함시키기 위한 방법
     // 1. 이 element들을 function(함수)로 만들어야 함
     // 2. 그리고 html tag처럼 이 element를 넣어줌
     // ⭐ component의 첫 글자는 반드시 대문자!!!
     // 만약 소문자, react랑 JSX는 이게 일반 html tag라고 생각함
-    
+
     // 이렇게 JSX는 어플리케이션을 여러가지 작은 요소로 나누어 관리할 수 있게 해줌
     // 여러 요소로 잘게 쪼개서 만들어서 렌더링으로 합쳐주기만 하면 됨
     // Babel은 이걸 react코드로 변환 → title(), button(), Container()를 createElement()로 return함
@@ -112,6 +124,7 @@
     // render() = React element를 가지고 html로 만들어 배치 -> 사용자에게 보여준다
     // render(배치할 element, 배치할 장소);
     // ReactDOM.render(span, root);
-    ReactDOM.render(<Container />, root);
+    // ReactDOM.render(<Container />, root);
+    render();
   </script>
 </html>
