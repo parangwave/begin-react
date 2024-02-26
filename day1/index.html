@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>setState part.2</title>
+    <title>Recap</title>
     <!-- state; 기본적으로 데이터가 저장되는 곳 -->
     <!-- react js 어플에 값이 바뀔 데이터를 담아줄 수 있을까 살펴보기-->
     <!-- 후에 내용 복습, component(=함수)에 state를 더할 것임 -->
@@ -125,6 +125,14 @@
         // -> ReactDOM.render(<App />, root);
         // modifier 함수가 counter의 값을 바꾸고 리렌더링까지 자동
       }
+      // modifier 함수를 사용해 컴포넌트의 state(어플리케이션의 data)를 바꿀 때, 
+      // component는 새로운 값을 가지고 rerendering
+      // 버튼을 누르면 setCounter() 호출 -> setCounter()는 리렌더링을 일으킴
+      // => rendered가 한 번 더 출력, 현재 counter 변수 값 출력
+      // ⭐ React JS의 핵심 = state(데이터)가 바뀔때마다 컴포넌트를 리렌더링 + UI refresh
+      console.log("rendered");
+      console.log(counter);
+
       // const counter = data[0];
       // const modifier = data[1];
 
