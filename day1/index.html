@@ -3,10 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>setState part.1</title>
+    <title>setState part.2</title>
     <!-- state; 기본적으로 데이터가 저장되는 곳 -->
     <!-- react js 어플에 값이 바뀔 데이터를 담아줄 수 있을까 살펴보기-->
     <!-- 후에 내용 복습, component(=함수)에 state를 더할 것임 -->
+    <!-- modifier 쓰는 방법, 왜 modifier가 이용해야 하는지 -->
 
     <!-- JSX; JS를 확장한 문법  -->
     <!-- html에서 사용한 문법과 흡사한 문법을 사용해서 react요소를 만들 수 있게 함 -->
@@ -108,25 +109,32 @@
     // => 👍 React JS 어플 내에서 데이터를 보관, 자동으로 리렌더링 👍 -> 매번 함수 호출할 필요 X
     // 사용자에게 새로운 정보를 보여주고 싶으면, 새로운 정보를 가지고 component를 리렌더링 해줘야함
     // ⭐ React Js가 어떻게 데이터를 update하는 지 원리를 잘 파악해보기!
+    
     function App () {
       // const data = React.useState();
       const data = React.useState(0);
       // data(초기값) data를 바꾸기 위한 func
-      console.log(data);  // array를 반환 { undefined, func }
+      // console.log(data);  // array를 반환 { undefined, func }
       
-      // 배열에서 요소 -> 변수
-      const [counter, modifier] = React.useState(0);
-      console.log(counter);
-      console.log(modifier);
+      // ⭐ 배열에서 요소 -> 변수
+      // const [counter, modifier] = React.useState(0);
+      const [counter, setCounter] = React.useState(0);
+      const onClick = () => {
+        setCounter(counter + 1);
+        // -> counter = 9898798;
+        // -> ReactDOM.render(<App />, root);
+        // modifier 함수가 counter의 값을 바꾸고 리렌더링까지 자동
+      }
       // const counter = data[0];
       // const modifier = data[1];
 
+      // 사용자가 보게될 component
+      // 변수를 component에 연결 -> 변수 = 데이터 -> 해당 변수에 담긴 값 변경
       return (
         <div>
           {/* <h3>Total clicks: { data[0] }</h3> */}
-          {/* <h3>Total clicks: { counter }</h3> */}
-          <h3>Total clicks: 0</h3>
-          <button>Click me</button>
+          <h3>Total clicks: { counter }</h3>
+          <button onClick={onClick}>Click me</button>
         </div>
       );
     }
