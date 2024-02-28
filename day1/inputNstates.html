@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>State Practice part.1</title>
+    <title>State Practice part.2</title>
+    <!-- 시->분 변환 -->
+    <!-- flip(); input을 하나만 열도록 switch -->
   </head>
   <body>
     <div id="root"></div>
@@ -18,7 +20,9 @@
     function App() {
       // useState -> array 제공, 첫번쩨 ele = 현재의 값 = state
       // onChange X, state가 0 -> update가 안 됨
-      const [minutes, setMinutes] = React.useState(0);
+      const [amount, setAmount] = React.useState(0);
+      // const [minutes, setMinutes] = React.useState(0);
+      const [flipped, setFlipped] = React.useState(false);
       const [hours, setHours] = React.useState(0);
 
       // // input에 변화 (=사용자가 input에 뭔가 입력) -> 리스닝
@@ -33,13 +37,21 @@
         // SyntheticBaseEvent = react가 만든 가짜 이벤트
         // 원래 이벤트(native event)는 SyntheticBaseEvent 속 nativeJavascript event
         // console.log(event.target.value);
-
+        
         // 우리가 적은 input의 value 바탕으로 component 업데이트
-        setMinutes(event.target.value);
-      };
+        // setMinutes(event.target.value);
 
+        setAmount(event.target.value);
+      };
+      
       // state를 리스닝하거나, 연결한 모든 것들은 전부 0으로 돌려짐
-      const reset = () => setMinutes(0);
+      const reset = () => setAmount(0);
+      // const onFlip = () => setFlipped(current => !current);  // 현재 state -> 새로운 state 계산
+      const onFlip = () => {
+        reset();
+        setFlipped(current => !current);
+      }
+      
 
       return (
         <div>
@@ -47,34 +59,44 @@
             <h1>Super Converter</h1>
             {/* class X, className */}
             {/* for X, htmlFor */}
-
+            
             {/* react js 세계에선 input은 uncontrolled한 요소임 */}
             {/* 즉, input의 value는 통제 불가능 */}
             <label htmlFor="minutes">Minutes </label>
             <input
-            value={minutes}
-            type="number"
-            id="minutes"
-            placeholder="Minutes"
-            onChange={onChange}
+              value={ flipped ? amount * 60 : amount}
+              type="number"
+              id="minutes"
+              placeholder="Minutes"
+              onChange={onChange}
+              // disabled={flipped === true}
+              disabled={flipped}
             />  
-          </div>
-          <br />
-          
-          <div>
-            <h4>You want to convert {minutes} min</h4>
-            <label htmlFor="hours">Hours </label>
+            </div>
+            <br />
+            
+            <div>
+              <label htmlFor="hours">Hours </label>
             <input 
-              // value={hours} 
-              // minutes state를 리스닝하는 input이 2개
-              // => 새로 업데이트된 값을 가지고, 이 모든 코드가 다시 한 번 rendered됨
-              value={ Math.round(minutes / 60) } 
-              type="number" 
-              id="hours" 
-              placeholder="Hours" 
-            />
-          </div>
+                // value={hours} 
+                // minutes state를 리스닝하는 input이 2개
+                // => 새로 업데이트된 값을 가지고, 이 모든 코드가 다시 한 번 rendered됨
+                
+                // 이건 minutes input에 값을 썼을때만 계산이 이뤄져야함
+                // value={ Math.round(minutes / 60) } 
+                value={ flipped ? amount : Math.round(amount / 60) } 
+
+                type="number" 
+                id="hours" 
+                placeholder="Hours" 
+                // disabled={flipped === false}
+                disabled={!flipped}
+                // 이제 state -> input을 enabled / disabled 할 지 결정할 수 있음
+                onChange={onChange}
+              />
+              </div>
           <button onClick={reset}>Reset</button>
+          <button onClick={onFlip}>Flip</button>
         </div>
       );
     }
