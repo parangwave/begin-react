@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Input & States</title>
+    <title>State Practice part.1</title>
   </head>
   <body>
     <div id="root"></div>
@@ -17,8 +17,9 @@
     const root = document.getElementById("root");
     function App() {
       // useState -> array 제공, 첫번쩨 ele = 현재의 값 = state
-      const [minutes, setMinutes] = React.useState();
-      const [hours, setHours] = React.useState();
+      // onChange X, state가 0 -> update가 안 됨
+      const [minutes, setMinutes] = React.useState(0);
+      const [hours, setHours] = React.useState(0);
 
       // // input에 변화 (=사용자가 input에 뭔가 입력) -> 리스닝
       // // JS 방식
@@ -27,6 +28,7 @@
       // };
 
       // react js
+      // event 발생->❗ 데이터를 업데이트->UI에 보여주는 함수
       const onChange = (event) => {
         // SyntheticBaseEvent = react가 만든 가짜 이벤트
         // 원래 이벤트(native event)는 SyntheticBaseEvent 속 nativeJavascript event
@@ -36,32 +38,43 @@
         setMinutes(event.target.value);
       };
 
+      // state를 리스닝하거나, 연결한 모든 것들은 전부 0으로 돌려짐
+      const reset = () => setMinutes(0);
+
       return (
         <div>
-          <h1>Super Converter</h1>
-          {/* class X, className */}
-          {/* for X, htmlFor */}
+          <div>
+            <h1>Super Converter</h1>
+            {/* class X, className */}
+            {/* for X, htmlFor */}
 
-          {/* react js 세계에선 input은 uncontrolled한 요소임 */}
-          {/* 즉, input의 value는 통제 불가능 */}
-          <label htmlFor="minutes">Minutes </label>
-          <input
-          value={minutes}
-          type="number"
-          id="minutes"
-          placeholder="Minutes"
-          onChange={onChange}
-          />
+            {/* react js 세계에선 input은 uncontrolled한 요소임 */}
+            {/* 즉, input의 value는 통제 불가능 */}
+            <label htmlFor="minutes">Minutes </label>
+            <input
+            value={minutes}
+            type="number"
+            id="minutes"
+            placeholder="Minutes"
+            onChange={onChange}
+            />  
+          </div>
           <br />
           
-          <h4>You want to convert {minutes} min</h4>
-          <label htmlFor="hours">Hours </label>
-          <input 
-            // value={hours} 
-            type="number" 
-            id="hours" 
-            placeholder="Hours" 
-          />
+          <div>
+            <h4>You want to convert {minutes} min</h4>
+            <label htmlFor="hours">Hours </label>
+            <input 
+              // value={hours} 
+              // minutes state를 리스닝하는 input이 2개
+              // => 새로 업데이트된 값을 가지고, 이 모든 코드가 다시 한 번 rendered됨
+              value={ Math.round(minutes / 60) } 
+              type="number" 
+              id="hours" 
+              placeholder="Hours" 
+            />
+          </div>
+          <button onClick={reset}>Reset</button>
         </div>
       );
     }
