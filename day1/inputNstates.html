@@ -22,7 +22,7 @@
       // onChange X, state가 0 -> update가 안 됨
       const [amount, setAmount] = React.useState(0);
       // const [minutes, setMinutes] = React.useState(0);
-      const [flipped, setFlipped] = React.useState(false);
+      const [inverted, setInverted] = React.useState(false);
       const [hours, setHours] = React.useState(0);
 
       // // input에 변화 (=사용자가 input에 뭔가 입력) -> 리스닝
@@ -47,9 +47,9 @@
       // state를 리스닝하거나, 연결한 모든 것들은 전부 0으로 돌려짐
       const reset = () => setAmount(0);
       // const onFlip = () => setFlipped(current => !current);  // 현재 state -> 새로운 state 계산
-      const onFlip = () => {
+      const onInvert = () => {
         reset();
-        setFlipped(current => !current);
+        setInverted(current => !current);
       }
       
 
@@ -64,13 +64,13 @@
             {/* 즉, input의 value는 통제 불가능 */}
             <label htmlFor="minutes">Minutes </label>
             <input
-              value={ flipped ? amount * 60 : amount}
+              value={ inverted ? amount * 60 : amount}
               type="number"
               id="minutes"
               placeholder="Minutes"
               onChange={onChange}
               // disabled={flipped === true}
-              disabled={flipped}
+              disabled={inverted}
             />  
             </div>
             <br />
@@ -84,19 +84,19 @@
                 
                 // 이건 minutes input에 값을 썼을때만 계산이 이뤄져야함
                 // value={ Math.round(minutes / 60) } 
-                value={ flipped ? amount : Math.round(amount / 60) } 
+                value={ inverted ? amount : Math.round(amount / 60) } 
 
                 type="number" 
                 id="hours" 
                 placeholder="Hours" 
                 // disabled={flipped === false}
-                disabled={!flipped}
+                disabled={!inverted}
                 // 이제 state -> input을 enabled / disabled 할 지 결정할 수 있음
                 onChange={onChange}
               />
               </div>
           <button onClick={reset}>Reset</button>
-          <button onClick={onFlip}>Flip</button>
+          <button onClick={onInvert}>{ inverted ? "Turn back" : "Invert"}</button>
         </div>
       );
     }
